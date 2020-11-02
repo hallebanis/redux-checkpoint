@@ -2,24 +2,32 @@ export const addTaskAction=(newTask)=>{
 return(
     {
         type:"ADD_TASK",
-        value:newTask
+        payload:newTask
     }
 )
 }
-export const editTaskAction=(task)=>{
+export const editTaskAction=(id)=>{
     return(
         {
             type:"EDIT_TASK",
-            task:task
+            payload:id
         }
     )
 }
-export const filterTaskAction=(listF,typeF)=>{
+export const filterTaskAction=(filterType)=>{
     return(
         {
             type:"FILTER_TASKS",
-            list:listF,
-            typeF:typeF
+            payload:filterType
         }
     )
+}
+
+export const deleteTaskAction=(id)=>{
+   return(
+    {
+        type:"DELETE_TASK",
+        payload:id
+    }
+   ) 
 }

@@ -1,13 +1,17 @@
+import nextId,{setPrefix} from 'react-id-generator'
+setPrefix("TS-");
 const data =[
     {
-        id:'ts1',
+        id:nextId(),
         description:'description 1',
         isDone:true
     },
     {
-        id:'ts2',
+        id:nextId(),
         description:'description 2',
         isDone:false
     }
 ]
-export default data;
+
+const initialState ={tasks:data,filter:"all"}
+export default initialState;

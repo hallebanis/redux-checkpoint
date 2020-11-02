@@ -8,25 +8,31 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {filterTaskAction} from '../actions/actions'
 
+
 const ListTask = (props) => {
   var today = new Date(),date =today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate();
-  const taskL = useSelector((state) => state.reducer);
-  const taskLFiltred=useSelector((state)=>state.reducer2)
-  const dispatch=useDispatch();
-  const handleFilter=(e)=>{
-    dispatch(filterTaskAction(taskL,e.target.id))
-    props.onFilter(e.target.id.toString())
+  const tasks=useSelector(state=>state)
+  const dispatch=useDispatch()
+  const handleView=(viewType)=>{
+    switch (viewType) {
+      case "true":
+        return(tasks.tasks.map(elm=>{
+          if(elm.isDone===true)
+          return(<Task task={elm} key={elm.id} />)}
+            ))
+        case "false":
+          return(tasks.tasks.map(elm=>{
+            if(elm.isDone===false)
+            return(<Task task={elm} key={elm.id} />)}
+              ))
+    
+      default:
+        return(tasks.tasks.map(elm=><Task task={elm} key={elm.id} />
+        ))
+    }
+    
   }
-  const handleViewChange=(x)=>{
-    if(x==="true" || x==="false")
-    return(taskLFiltred.map((elm) => (
-      <Task task={elm} key={elm.id} view={props.view} />
-    )))
-   else
-   return(taskL.map((elm) => (
-    <Task task={elm} key={elm.id} />
-  )))
-  }
+  
 
   return (
     <div>
@@ -42,23 +48,23 @@ const ListTask = (props) => {
                 type="radio"
                 label="All"
                 name="filter"
-                id="All"
+                id="all"
                 defaultChecked={true}
-                onChange={(e)=>handleFilter(e)}
+                onClick={(e)=>dispatch(filterTaskAction(e.target.id))}
               />
               <Form.Check
                 type="radio"
                 label="Done"
                 name="filter"
                 id="true"
-                onClick={(e)=>handleFilter(e)}
+                onChange={(e)=>dispatch(filterTaskAction(e.target.id))}
               />
               <Form.Check
                 type="radio"
                 label="Not done"
                 name="filter"
                 id="false"
-                onClick={(e)=>handleFilter(e)}
+                onChange={(e)=>dispatch(filterTaskAction(e.target.id))}
               />
             </Col>
           </Form.Group>
@@ -72,11 +78,11 @@ const ListTask = (props) => {
             <th>#Id</th>
             <th>Description</th>
             <th>Done?</th>
-            <th>Change</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-        {handleViewChange(props.view)}
+          {handleView(tasks.filter)}
         </tbody>
       </Table>
     </div>

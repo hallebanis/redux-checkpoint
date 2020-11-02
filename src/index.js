@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {reducer,reducer2} from './reducers/rootReducer'
-import { combineReducers, createStore } from 'redux';
+import {reducer} from './reducers/rootReducer'
+import {createStore} from 'redux';
 import { Provider } from 'react-redux';
 
-const combinedReducers=combineReducers({
-  reducer,
-  reducer2,
-})
-const store=createStore(combinedReducers)
+
+const store=createStore(reducer)
 
 
 ReactDOM.render(
